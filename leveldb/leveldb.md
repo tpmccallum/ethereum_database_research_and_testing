@@ -74,7 +74,7 @@ Each Ethereum block has its own separate transaction trie. A block contains many
 
 # Installing Ethereum
 
-We are going to install Ethereum on a private network, create accounts, perform transactions and then analyse the application data layer in order to improve out understand of how Ethereum works. We will be doing this on a Linux Ubuntu 16.04 LTS installation.
+We are going to install Ethereum on a private network, create accounts, perform transactions and then analyse the application data layer in order to improve our understand of how Ethereum works. We will be doing this on a Linux Ubuntu 16.04 LTS installation.
 
 ## Housekeeping
 

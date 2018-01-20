@@ -1,2 +1,2 @@
-# ethereum_database_research_and_testing
-A repository which provides, information, code examples and step by step instructions on how to explore Ethereum's database infrastructure 
+
+Please begin [here](https://github.com/tpmccallum/ethereum_database_research_and_testing/blob/master/leveldb/leveldb.md)

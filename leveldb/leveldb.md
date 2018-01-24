@@ -56,7 +56,7 @@ In Ethereum, a single merkle patricia trie node is either:
 
 ## State trie - the one and only
 
-There is one, and one only, global state trie in Ethereum. A "value" in the global state trie is created by encoding the following account details of an Ethereum account (using the Recursive-Length Prefix encoding (RLP) method):
+There is one, and one only, global state trie in Ethereum. The state trie's root node can be used as a secure and unique identity for the entire state trie; the state trie's root node is cryptographically dependent on all internal state trie data.  A "value" in the global state trie is created by encoding the following account details of an Ethereum account (using the Recursive-Length Prefix encoding (RLP) method):
 - nonce
 - balance
 - storageRoot

@@ -8,15 +8,15 @@ In this post we:
 - introduce the Patricia Trie data structure which Ethereum uses exclusively
 - learn how Ethereum implements the Patricia Trie data structure inside leveldb
 - learn about Ethereum's leveldb structure
-- provide a step by step guide on installing a testbed for Ethereum and leveldb (using Ubuntu Linux 16.04LTS)
-- provide justification for using an Ethereum private network for the testbed (as apposed to the mainnet or testnets)
+- provide a step by step guide on installing a test-bed for Ethereum and leveldb (using Ubuntu Linux 16.04LTS)
+- provide justification for using an Ethereum private network for the test-bed (as apposed to the main-net or testnets)
 - configure and run Ethereum on a private network
 - configure Ethereum to mine on the private network
 - execute transactions and smart contracts on the Ethereum private network
 - explore Ethereum's application data storage layer, leveldb, before and after activity to discover how it works
 
 # Blockchain "state"
-Ethereum is essentially a transaction-based "state" machine. The Ethereum blockchain begins life with a genesis state. You may remember the genesis block from other blockchain implementations such as bitcoin. From the genesis point onwards, the state, or the cononical version of the Ethereum world, is continually altered. For example, account balances, which are stored in the state, change as transactions take place. 
+Ethereum is essentially a transaction-based "state" machine. The Ethereum blockchain begins life with a genesis state. You may remember the genesis block from other blockchain implementations such as bitcoin. From the genesis point onward, the state, or the canonical version of the Ethereum world, is continually altered. For example, account balances, which are stored in the state, change as transactions take place. 
 
 The state is not stored in the blocks of the Ethereum blockchain. The blocks function as a journal; a record of transactions. One of the key features of the blockchain is immutability. Once blocks are mined they are never updated. It  makes sense then, that permanent data like mined transactions would be stored separately from data like ephemeral account balances. We will learn more about this when we cover Ethereum's data structure.
 
@@ -30,7 +30,7 @@ Rocksdb is out of scope for this post. This will be covered at a later date. For
 
 ## Ethereum and leveldb
 
-LevelDB is an open source Google key-value storage library which provides, amongst other things, forward and backward iterations over data, ordered mapping from string keys to string values, custom comparison functions and automatic compression. The data is automatically compressed using “Snappy” an open source Google compression/decompression library. Whilst Snappy does not aim for maximum compression, it aims for very high speeds. Leveldb is an important storage and retrieval mechanism which manages the state of the Ethereum network. As such, leveldb is a dependancy for the most popular Ethereum clients (nodes) such as go-ethereum, cpp-ethereum and pyethereum.
+LevelDB is an open source Google key-value storage library which provides, amongst other things, forward and backward iterations over data, ordered mapping from string keys to string values, custom comparison functions and automatic compression. The data is automatically compressed using “Snappy” an open source Google compression/decompression library. Whilst Snappy does not aim for maximum compression, it aims for very high speeds. Leveldb is an important storage and retrieval mechanism which manages the state of the Ethereum network. As such, leveldb is a dependency for the most popular Ethereum clients (nodes) such as go-ethereum, cpp-ethereum and pyethereum.
 
 So how does Ethereum utilise leveldb?
 
@@ -38,16 +38,16 @@ So how does Ethereum utilise leveldb?
 A trie (or tree) is a data structure. Ethereum exclusively uses the Patricia Trie for its storage and retrieval of data.
 Whilst the implementation of the trie data structure can be done on disk (using database software such as leveldb) it is important to note that there is a difference between traversing a trie and simply looking at the flat key/value database.
 
-As a general example, if we were wanting to traverse a trie for the word dog, we might start at the root node of the tree and find the first character of the hexadecimal representation of "d" for dog. The letter "d" has a hexadecimal representation of 64, and as such we would start at the index of  "6" and continue to follow the path downwards by progressing to index 4 in the next node and so on. In a general sense this is quite innefficient because we might find our path being extreemely deep, when storing longer strings. To address this Ethereum specifically use a "Practical Algorithm To Retrieve Information Coded In Alphanumeric" (PATRICIA) Trie as apposed to say a radix trie. All of the merkle tries in Ethereum use a Merkle Patricia Trie.
+As a general example, if we were wanting to traverse a trie for the word dog, we might start at the root node of the tree and find the first character of the hexadecimal representation of "d" for dog. The letter "d" has a hexadecimal representation of 64, and as such we would start at the index of  "6" and continue to follow the path downwards by progressing to index 4 in the next node and so on. In a general sense this is quite inefficient because we might find our path being extremely deep, when storing longer strings. To address this Ethereum specifically use a "Practical Algorithm To Retrieve Information Coded In Alphanumeric" (PATRICIA) Trie as apposed to say a radix trie. All of the merkle tries in Ethereum use a Merkle Patricia Trie.
 
-## Merkle Patricial Trie
+## Merkle Patricia Trie
 
-Every interaction between Ethereum and its database involves a determinstic hash. In other words every put, update and delete function performed on the trie is done so, using a determistic cryptographic hash. Further, the cryptographic hash of the node is used as the uniue pointer of each node in Ethereum's database. This of course works due to the fact that a determistic hash (a one-way has like sha3) provides a consistant hash in relation to the data which was used to generate the hash. 
+Every interaction between Ethereum and its database involves a deterministic hash. In other words every put, update and delete function performed on the trie is done so, using a deterministic cryptographic hash. Further, the cryptographic hash of the node is used as the unique pointer of each node in Ethereum's database. This of course works due to the fact that a deterministic hash (a one-way has like sha3) provides a consistent hash in relation to the data which was used to generate the hash. 
 
 The use of hashing also provides cryptographic data integrity; any changes to the data, at any level, would change the root hash. This provides a fast data integrity mechanism.
 
-In Ethereum, a single merkle patricia trie node is either:
-- an empty string (refered to as NULL)
+In Ethereum, a single merkle Patricia trie node is either:
+- an empty string (referred to as NULL)
 - an array which contains 17 items (referred to as a branch)
 - an array which contains 2 items (referred to as a leaf)
 - an array which contains 2 items (referred to as an extension)
@@ -175,7 +175,7 @@ This function controls which difficulty adjustment function is called.
 
 ![default Ethereum consensus file](./images/consensus_before.png)
 
-In order to gaurantee the lowest difficulty level (on an ongoing basis), we will need to strip out the case statement and simply return big.NewInt(1) for the entire function's excecution.
+In order to guarantee the lowest difficulty level (on an ongoing basis), we will need to strip out the case statement and simply return big.NewInt(1) for the entire function's execution.
 
 `
 return big.NewInt(1)
@@ -217,7 +217,7 @@ Alternatively, the network ID can be passed into the command line when starting 
 -- networkid
 `
 
-Obviously, in order to keep other nodes from connecting to your private Ethereum test network it would be in your best interests to a) secure the network using a properly configured filewall and b) choose a unique network ID
+Obviously, in order to keep other nodes from connecting to your private Ethereum test network it would be in your best interests to a) secure the network using a properly configured firewall and b) choose a unique network ID
 
 ## Account
 
@@ -251,7 +251,7 @@ Address: {77fd1acbd74fab8dc821fe5c88598c7b4b906fd4}
 
 ## Genesis block
 
-When running Ethereum for the first time, if the default settings are used, the blockchain will start at the "hard coded" genesis block (first block in the public main net blockchain). From this point onwards the code will find peers and synchonise until the Ethereum instance which you are running is up to date. Being synchronised, or up to date, means that you are storing everything from the genesis block, right up, to the most recent block, locally. Ethereum's blockchain is almost 45GB in size and so for our purpose of testing this is not desirable.
+When running Ethereum for the first time, if the default settings are used, the blockchain will start at the "hard coded" genesis block (first block in the public main net blockchain). From this point onward the code will find peers and synchronise until the Ethereum instance which you are running is up to date. Being synchronised, or up to date, means that you are storing everything from the genesis block, right up, to the most recent block, locally. Ethereum's blockchain is almost 45GB in size and so for our purpose of testing this is not desirable.
 
 Instead, we can create our own genesis block. This must be done before starting Ethereum. 
 

@@ -381,24 +381,37 @@ To reference the level library into the console session type the following comma
 var level = require('level')
 `
 
-The following command it use to set the database variable to the root directory of the Ethereum database
+The following command is use to set the database variable to the root directory of the Ethereum database
 
 `
 var db = level('/home/timothymccallum/gethDataDir/geth/chaindata')
 `
-Please note, Ethereum must not be running when trying to access the database using nodejs. There will be a lock in place which will stop you from accessing the data.
+We now have the ability to connect to and explore Ethereum's leveldb database.
 
-The following code creates a read stream and allows us to retrieve all key/value pairs from the leveldb database
+# Web3
+As we mentioned previously there are many Merkle Patricia Tries (referenced in **each** block) within the Ethereum blockchain:
 
-![read stream code example](./images/ethereum_read_stream.png)
+- State Trie
+- Storage Trie
+- Transaction Trie
+- Receipts Trie
 
-As we mentioned above Ethereum uses RLP to encode the values. This is evident in the output which we just received.
+To reference a Merlke Patricia Tries in a particular block we need to obtain its root. The following commands are an examle of how to obtain the root hashes of the state, transaction and receipt tries in the genesis block (block 0).
 
-![read stream code example](./images/ethereum_read_stream_first_output.png)
+`
+web3.eth.getBlock(0).stateRoot
+`
+`
+web3.eth.getBlock(0).transactionsRoot
+`
+`
+web3.eth.getBlock(0).receiptsRoot
+`
 
-We are now going to provide node references and then traverse the paths of the **state** trie, **storage** trie and **transaction** trie in order to obtain the **state** data, **contract** data and **transaction** data respectively.
+For example
+![block key value image](./images/block_root_key_values.png)
 
-From this point, we can make changes to all of these areas and re-inspect the data.
+
 
 # References
 [1] Wood, G., 2014. Ethereum: A secure decentralised generalised transaction ledger. Ethereum Project Yellow Paper, 151.

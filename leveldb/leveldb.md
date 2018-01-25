@@ -16,7 +16,7 @@ In this post we:
 - explore Ethereum's application data storage layer, leveldb, before and after activity to discover how it works
 
 # Blockchain "state"
-Ethereum is essentially a transaction-based "state" machine. The Ethereum blockchain begins life with a genesis state. You may remember the genesis block from other blockchain implementations such as bitcoin. From the genesis point onward, the state, or the canonical version of the Ethereum world, is continually altered. For example, account balances, which are stored in the state, change as transactions take place. 
+Ethereum is a transaction-based "state" machine; a technology on which all transaction based state machine concepts may be built [1]. The Ethereum blockchain begins life with a genesis state. From the genesis block onward, activities such as transactions, contracts and mining continually change the state of the Ethereum blockchain. In Ethereum, an example of this would be an account balance (stored in the state trie) changing when a transaction, in relation to that account, takes place. 
 
 The state is not stored in the blocks of the Ethereum blockchain. The blocks function as a journal; a record of transactions. One of the key features of the blockchain is immutability. Once blocks are mined they are never updated. It  makes sense then, that permanent data like mined transactions would be stored separately from data like ephemeral account balances. We will learn more about this when we cover Ethereum's data structure.
 
@@ -399,3 +399,6 @@ As we mentioned above Ethereum uses RLP to encode the values. This is evident in
 We are now going to provide node references and then traverse the paths of the **state** trie, **storage** trie and **transaction** trie in order to obtain the **state** data, **contract** data and **transaction** data respectively.
 
 From this point, we can make changes to all of these areas and re-inspect the data.
+
+# References
+[1] Wood, G., 2014. Ethereum: A secure decentralised generalised transaction ledger. Ethereum Project Yellow Paper, 151.

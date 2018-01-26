@@ -336,59 +336,8 @@ Transactions and smart contracts soon.
 
 # Analysing the Ethereum database
 
-## Installing npm, node and level
 
-We will be using nodejs and level to inspect the leveldb database.
-
-With reference to the following site https://github.com/nodesource/distributions to install nodejs and npm please use the following commands.
-
-`
-curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
-sudo apt-get install -y nodejs
-`
-
-`
-sudo apt-get install nodejs
-`
-
-You can verify the versions by typing the following commands.
-
-`
-npm -v
-`
-
-For nodejs
-
-`
-nodejs -v
-`
-
-To install level, please use the following command.
-
-`
-npm install level
-`
-
-The nodejs console can be started by typing.
-
-`
-nodejs
-`
-
-To reference the level library into the console session type the following command.
-
-`
-var level = require('level')
-`
-
-The following command is use to set the database variable to the root directory of the Ethereum database
-
-`
-var db = level('/home/timothymccallum/gethDataDir/geth/chaindata')
-`
-We now have the ability to connect to and explore Ethereum's leveldb database.
-
-# Web3
+## Web3
 As we mentioned previously there are many Merkle Patricia Tries (referenced in **each** block) within the Ethereum blockchain:
 
 - State Trie
@@ -419,6 +368,72 @@ For example
 web3.eth.getBlock(web3.eth.blockNumber).stateRoot
 `
 
+
+## Installing npm, node and level
+
+We will be using nodejs and level to inspect the leveldb database.
+
+With reference to the following site https://github.com/nodesource/distributions to install nodejs and npm please use the following commands.
+
+`
+curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+sudo apt-get install -y nodejs
+`
+
+`
+sudo apt-get install nodejs
+`
+
+You can verify the versions by typing the following commands.
+
+`
+npm -v
+`
+
+For nodejs
+
+`
+nodejs -v
+`
+
+To install level and other requirements, please use the following command.
+
+`
+npm install levelup leveldown rlp merkle-patricia-tree --save
+`
+
+The nodejs console can be started by typing.
+
+`
+nodejs
+`
+
+Here is an example of a file which I created (saves as file.js), and ran from the terminal using 
+
+`
+nodejs file.js
+`
+
+`
+//requirements
+var Trie = require('merkle-patricia-tree');
+var levelup = require('levelup');
+var leveldown = require('leveldown');
+var rlp = require('rlp');
+//set the database variable
+var db = levelup(leveldown('/home/timothymccallum/gethDataDir/geth/chaindata'));
+//set the genesis state root variable
+var root = '0xe403429877a3fd13eb3da17503af458dd0741ec3b617f2eaf2338ca945edb0e2';
+//set the trie variable
+var trie = new Trie(db, root);
+//set the variable tim which is my account address
+var tim = new Buffer('0xb7714bd73152a27939914c644fb7471966378626', 'hex');
+//get results from leveldb
+trie.get(tim, function (err, val) {
+  var decoded = rlp.decode(val);
+  console.log(decoded);
+});
+`
 
 # References
 [1] Wood, G., 2014. Ethereum: A secure decentralised generalised transaction ledger. Ethereum Project Yellow Paper, 151.

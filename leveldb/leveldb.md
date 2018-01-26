@@ -240,12 +240,12 @@ geth account new --datadir ~/gethDataDir
 
 The output from the above command will produce a public account address (after you provide a password). Record and save this address for later use.
 
-`
+```
 Your new account is locked with a password. Please give a password. Do not forget this password.
 Passphrase: 
 Repeat passphrase: 
 Address: {77fd1acbd74fab8dc821fe5c88598c7b4b906fd4}
-`
+```
 
 **It is recommended that you do this twice, that way you will have to addresses which you can send ETH back and forth to**
 
@@ -262,7 +262,7 @@ Create a file such as below, and save it with the name "genesis.json" into the ~
 **Note** the "alloc" section where we paste in the two account addresses from above.
 **Note** the "chainId" section which is set to 15 (and not 1). If you remember, above in the **Network ID** section, 1 is the main Ethereum network.
 
-`
+```
 {
     "config": {
         "chainId": 15,
@@ -277,7 +277,7 @@ Create a file such as below, and save it with the name "genesis.json" into the ~
         "b7714bd73152a27939914c644fb7471966378626": { "balance": "400000" }
     }
 }
-`
+```
 
 ## Initialize the blockchain 
 
@@ -414,7 +414,7 @@ Here is an example of a file which I created (saves as file.js), and ran from th
 nodejs file.js
 `
 
-`
+```
 //requirements
 var Trie = require('merkle-patricia-tree');
 var levelup = require('levelup');
@@ -433,7 +433,7 @@ trie.get(tim, function (err, val) {
   var decoded = rlp.decode(val);
   console.log(decoded);
 });
-`
+```
 
 # References
 [1] Wood, G., 2014. Ethereum: A secure decentralised generalised transaction ledger. Ethereum Project Yellow Paper, 151.

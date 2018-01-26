@@ -2,9 +2,10 @@
 //Firstly reference the node library
 var level = require('level')
 
-var db = level('/home/timothymccallum/gethDataDir/geth/chaindata')
+var db = level('/home/timothymccallum/gethDataDir/geth/lightchaindata')
 
 var keyStream = db.createKeyStream()
 keyStream.on('data', function (data){
 	console.log("key=", data);
 });
+

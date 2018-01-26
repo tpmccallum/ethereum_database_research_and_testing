@@ -396,7 +396,7 @@ As we mentioned previously there are many Merkle Patricia Tries (referenced in *
 - Transaction Trie
 - Receipts Trie
 
-To reference a particular Merlke Patricia Trie in a particular block we need to obtain its root hash, as a reference. The following commands are an example of how to obtain the root hashes of the state, transaction and receipt tries in the genesis block (block 0).
+To reference a particular Merkle Patricia Trie in a particular block we need to obtain its root hash, as a reference. The following commands are an example of how to obtain the root hashes of the state, transaction and receipt tries in the genesis block (block 0).
 
 `
 web3.eth.getBlock(0).stateRoot

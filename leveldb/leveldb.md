@@ -413,8 +413,11 @@ web3.eth.getBlock(0).receiptsRoot
 For example
 ![block key value image](./images/block_root_key_values.png)
 
-**Note:** If you would like the root hashes of the latest block use web3.eth.blockNumber (instead of web3.eth.getBlock(0).
+**Note:** If you would like the root hashes of the **latest** block (instead of the genesis block), please use the following command.
 
+`
+web3.eth.getBlock(web3.eth.blockNumber).stateRoot
+`
 
 
 # References

@@ -419,7 +419,7 @@ nodejs name_of_file.js
 
 The state trie contains a key and value pair for every account which exists on the Ethereum network. The "key" is a single 160 bit identifier (the address of an Ethereum account). The "value", is a serialised data structure (containing the nonce, balance, storageRoot and codeHash) of an Ethereum account.
 
-A Keccak-256-bit hash of state trie's root node (a has of the entire state trie) is stored in the block header, under the value of "stateRoot".
+A Keccak-256-bit hash of state trie's root node (a fixed length hash of the entire Ethereum state) is stored in the block header, under the value of "stateRoot". Storing only a single root hash in the block (as opposed to storing the entire list of all accounts, balances and so forth) provides two enormous benefits. Firstly, it keeps the size of the blocks in the blockchain down. Secondly, capturing the cryptographic hash of the state trie at every block height provides an opportunity for light clients to quickly join and trust the network. Light clients like Internet of Things (IoT) devices and mobile phone payment applications are not able to store the entire Ethereum blockchain and all of its databases (like a full node would do). Light client devices do not have the storage, memory or computing power to do much else than perform a quick check against a state trie root hash followed by a quick validity request to a full Ethereum node.
 
 ![state trie diagram](./images/state_trie_diagram.png)
 

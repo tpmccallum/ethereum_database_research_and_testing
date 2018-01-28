@@ -417,9 +417,46 @@ nodejs name_of_file.js
 
 ## State Trie
 
-The state trie contains a key and value pair for every account which exists on the Ethereum network. The "key" is a single 160 bit identifier (the address of an Ethereum account). The "value", is a serialised data structure (containing the nonce, balance, storageRoot and codeHash) of an Ethereum account. 
+The state trie contains a key and value pair for every account which exists on the Ethereum network. The "key" is a single 160 bit identifier (the address of an Ethereum account). The "value", is a serialised data structure (containing the nonce, balance, storageRoot and codeHash) of an Ethereum account.
 
-Accounts in Ethereum are only added to the state trie once a transaction has taken place (in relation to that specific account). For example, just creating a new account using "geth account new" will not include that account in the state trie; even after many blocks have been mined. However, if a successful transaction (one which is included in a mined block) is recorded against that account, then that account will then appear in the state trie. This is clever logic which protects against a malicious attacker continously create new accounts (in the command line at no cost to the attacker). Such an activity would bloat the state trie.
+A Keccak-256-bit hash of state trie's root node (a has of the entire state trie) is stored in the block header, under the value of "stateRoot".
+
+![state trie diagram](./images/state_trie_diagram.png)
+
+
+
+You can print a list of the Etherem account keys from the state root by executing the following script.
+
+```
+//Just getting the requirements
+var Trie = require('merkle-patricia-tree/secure');
+var levelup = require('levelup');
+var leveldown = require('leveldown');
+var RLP = require('rlp');
+var assert = require('assert');
+
+//Connecting to the leveldb database
+var db = levelup(leveldown('/home/timothymccallum/gethDataDir/geth/chaindata'));
+
+//Adding the "stateRoot" value from the block so that we can inspect the state root at that block height.
+var root = '0x8c77785e3e9171715dd34117b047dffe44575c32ede59bde39fbf5dc074f2976';
+
+//Creating a trie object of the merkle-patricia-tree library
+var trie = new Trie(db, root);
+
+//Creating a nodejs stream object so that we can access the data
+var stream = trie.createReadStream()
+
+//Turning on the stream (because the node js stream is set to pause by default)
+stream.on('data', function (data){
+  //printing out the keys of the "state trie"
+  console.log(data.key);
+});
+```
+
+![List of Ethereum accounts in the state trie](./images/three_accounts.png)
+
+Interestingly, accounts in Ethereum are only added to the state trie once a transaction has taken place (in relation to that specific account). For example, just creating a new account using "geth account new" will not include that account in the state trie; even after many blocks have been mined. However, if a successful transaction (one which is included in a mined block) is recorded against that account, then that account will then appear in the state trie. This is clever logic which protects against a malicious attacker continously create new accounts (in the command line at no cost to the attacker). Such an activity would bloat the state trie.
 
 https://github.com/tpmccallum/ethereum_database_research_and_testing/blob/master/leveldb/javascript/print_state_trie_keys.js
 

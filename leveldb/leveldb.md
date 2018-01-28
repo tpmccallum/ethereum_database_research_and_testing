@@ -35,8 +35,7 @@ LevelDB is an open source Google key-value storage library which provides, among
 So how does Ethereum utilise leveldb?
 
 # The Trie (or Tree)
-A trie (or tree) is a data structure. Ethereum exclusively uses the Patricia Trie for its storage and retrieval of data.
-Whilst the implementation of the trie data structure can be done on disk (using database software such as leveldb) it is important to note that there is a difference between traversing a trie and simply looking at the flat key/value database.
+A trie (or tree) is a data structure. Whilst the implementation of the trie data structure can be done on disk (using database software such as leveldb) it is important to note that there is a difference between traversing a trie and simply looking at the flat key/value database.
 
 As a general example, if we were wanting to traverse a trie for the word dog, we might start at the root node of the tree and find the first character of the hexadecimal representation of "d" for dog. The letter "d" has a hexadecimal representation of 64, and as such we would start at the index of  "6" and continue to follow the path downwards by progressing to index 4 in the next node and so on. In a general sense this is quite inefficient because we might find our path being extremely deep, when storing longer strings. To address this Ethereum specifically use a "Practical Algorithm To Retrieve Information Coded In Alphanumeric" (PATRICIA) Trie as apposed to say a radix trie. All of the merkle tries in Ethereum use a Merkle Patricia Trie.
 

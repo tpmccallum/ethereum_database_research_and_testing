@@ -456,9 +456,9 @@ stream.on('data', function (data){
 
 ![List of Ethereum accounts in the state trie](./images/three_accounts.png)
 
-Interestingly, accounts in Ethereum are only added to the state trie once a transaction has taken place (in relation to that specific account). For example, just creating a new account using "geth account new" will not include that account in the state trie; even after many blocks have been mined. However, if a successful transaction (one which is included in a mined block) is recorded against that account, then that account will then appear in the state trie. This is clever logic which protects against a malicious attacker continously create new accounts (in the command line at no cost to the attacker). Such an activity would bloat the state trie.
+Interestingly, accounts in Ethereum are only added to the state trie once a transaction has taken place (in relation to that specific account). For example, just creating a new account using "geth account new" will not include that account in the state trie; even after many blocks have been mined. 
 
-https://github.com/tpmccallum/ethereum_database_research_and_testing/blob/master/leveldb/javascript/print_state_trie_keys.js
+However, if a successful transaction (one which is included in a mined block) is recorded against that account, then that account will then appear in the state trie. This is clever logic which protects against a malicious attacker continously create new accounts (in the command line at no cost to the attacker). Such an activity would bloat the state trie.
 
 # References
 [1] Wood, G., 2014. Ethereum: A secure decentralised generalised transaction ledger. Ethereum Project Yellow Paper, 151.

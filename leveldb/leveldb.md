@@ -398,7 +398,7 @@ nodejs -v
 To install level and other requirements, please use the following command.
 
 `
-npm install levelup leveldown rlp merkle-patricia-tree --save
+npm install levelup leveldown rlp merkle-patricia-tree assert --save
 `
 
 The nodejs console can be started by typing.
@@ -407,32 +407,21 @@ The nodejs console can be started by typing.
 nodejs
 `
 
-Here is an example of a file which I created (saves as file.js), and ran from the terminal using 
+The javascript files in this repository can be run using the following syntax.
 
 `
-nodejs file.js
+nodejs name_of_file.js
 `
 
-```
-//requirements
-var Trie = require('merkle-patricia-tree');
-var levelup = require('levelup');
-var leveldown = require('leveldown');
-var rlp = require('rlp');
-//set the database variable
-var db = levelup(leveldown('/home/timothymccallum/gethDataDir/geth/chaindata'));
-//set the genesis state root variable
-var root = '0xe403429877a3fd13eb3da17503af458dd0741ec3b617f2eaf2338ca945edb0e2';
-//set the trie variable
-var trie = new Trie(db, root);
-//set the variable tim which is my account address
-var tim = new Buffer('0xb7714bd73152a27939914c644fb7471966378626', 'hex');
-//get results from leveldb
-trie.get(tim, function (err, val) {
-  var decoded = rlp.decode(val);
-  console.log(decoded);
-});
-```
+# Ethereum's database logic
+
+## State Trie
+
+The state trie contains a key and value pair for every account which exists on the Ethereum network. The "key" is a single 160 bit identifier (the address of an Ethereum account). The "value", is a serialised data structure (containing the nonce, balance, storageRoot and codeHash) of an Ethereum account. 
+
+Accounts in Ethereum are only added to the state trie once a transaction has taken place (in relation to that specific account). For example, just creating a new account using "geth account new" will not include that account in the state trie; even after many blocks have been mined. However, if a successful transaction (one which is included in a mined block) is recorded against that account, then that account will then appear in the state trie. This is clever logic which protects against a malicious attacker continously create new accounts (in the command line at no cost to the attacker). Such an activity would bloat the state trie.
+
+https://github.com/tpmccallum/ethereum_database_research_and_testing/blob/master/leveldb/javascript/print_state_trie_keys.js
 
 # References
 [1] Wood, G., 2014. Ethereum: A secure decentralised generalised transaction ledger. Ethereum Project Yellow Paper, 151.
